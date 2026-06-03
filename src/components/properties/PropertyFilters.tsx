@@ -16,7 +16,14 @@ import { Separator } from "@/components/ui/separator";
 import { propertyTypeLabel } from "@/lib/format";
 import { PROPERTY_TYPES } from "@/db/schema";
 
-export function PropertyFilters({ localities }: { localities: string[] }) {
+export function PropertyFilters({
+  localities,
+  onNavigate,
+}: {
+  localities: string[];
+  /** Called after a navigation fires — lets the mobile drawer close itself. */
+  onNavigate?: () => void;
+}) {
   const router = useRouter();
   const params = useSearchParams();
   const [q, setQ] = useState(params.get("q") ?? "");
@@ -38,11 +45,13 @@ export function PropertyFilters({ localities }: { localities: string[] }) {
       else merged.delete(k);
     }
     router.push(`/properties${merged.toString() ? `?${merged}` : ""}`);
+    onNavigate?.();
   }
 
   function clearAll() {
     setQ("");
     router.push("/properties");
+    onNavigate?.();
   }
 
   const hasFilters =
@@ -65,7 +74,7 @@ export function PropertyFilters({ localities }: { localities: string[] }) {
               onChange={(e) => setQ(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && apply({ q })}
               placeholder="Locality, title…"
-              className="bg-secondary/40 pl-9"
+              className="h-11 bg-secondary/40 pl-9"
             />
           </div>
         </div>
@@ -73,7 +82,7 @@ export function PropertyFilters({ localities }: { localities: string[] }) {
         <div>
           <label className="mb-2 block text-sm font-medium text-foreground">Property Type</label>
           <Select value={current.type} onValueChange={(v) => apply({ type: v })}>
-            <SelectTrigger className="bg-secondary/40">
+            <SelectTrigger className="h-11 bg-secondary/40">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -90,7 +99,7 @@ export function PropertyFilters({ localities }: { localities: string[] }) {
         <div>
           <label className="mb-2 block text-sm font-medium text-foreground">For</label>
           <Select value={current.listingType} onValueChange={(v) => apply({ listingType: v })}>
-            <SelectTrigger className="bg-secondary/40">
+            <SelectTrigger className="h-11 bg-secondary/40">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -104,7 +113,7 @@ export function PropertyFilters({ localities }: { localities: string[] }) {
         <div>
           <label className="mb-2 block text-sm font-medium text-foreground">Locality</label>
           <Select value={current.locality} onValueChange={(v) => apply({ locality: v })}>
-            <SelectTrigger className="bg-secondary/40">
+            <SelectTrigger className="h-11 bg-secondary/40">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -120,11 +129,11 @@ export function PropertyFilters({ localities }: { localities: string[] }) {
 
         <Separator />
 
-        <Button onClick={() => apply({ q })} className="w-full">
+        <Button onClick={() => apply({ q })} className="h-11 w-full">
           Apply Filters
         </Button>
         {hasFilters && (
-          <Button onClick={clearAll} variant="ghost" className="w-full text-muted-foreground">
+          <Button onClick={clearAll} variant="ghost" className="h-11 w-full text-muted-foreground">
             <X className="mr-1 h-4 w-4" /> Clear All
           </Button>
         )}

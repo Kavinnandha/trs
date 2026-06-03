@@ -46,15 +46,15 @@ export function EnquiryForm({
 
       <div>
         <label className="mb-1 block text-sm font-medium text-foreground">Full Name</label>
-        <Input name="name" required placeholder="e.g. Karthik Raja" className="bg-secondary/40" />
+        <Input name="name" required placeholder="e.g. Karthik Raja" className="h-11 bg-secondary/40" />
       </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-foreground">Phone Number</label>
-        <Input name="phone" required type="tel" placeholder="+91 98765 43210" className="bg-secondary/40" />
+        <Input name="phone" required type="tel" placeholder="+91 98765 43210" className="h-11 bg-secondary/40" />
       </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-foreground">Email (optional)</label>
-        <Input name="email" type="email" placeholder="you@example.com" className="bg-secondary/40" />
+        <Input name="email" type="email" placeholder="you@example.com" className="h-11 bg-secondary/40" />
       </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-foreground">Message</label>

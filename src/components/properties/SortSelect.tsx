@@ -23,7 +23,7 @@ export function SortSelect() {
 
   return (
     <Select value={sort} onValueChange={onChange}>
-      <SelectTrigger className="w-[180px] bg-card">
+      <SelectTrigger className="h-11 w-[150px] bg-card sm:w-[180px]">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

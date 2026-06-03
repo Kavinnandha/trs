@@ -132,9 +132,20 @@
   }
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
   body {
     @apply bg-background text-foreground;
+    /* clip (not hidden) stops sideways scroll without turning the page
+       into a scroll container — keeps `position: sticky` working. */
+    overflow-x: clip;
+  }
+  /* Media never forces horizontal overflow on small screens. */
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
   }
   ::selection {
     background: var(--gold);

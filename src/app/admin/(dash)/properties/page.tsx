@@ -39,7 +39,9 @@ export default async function AdminPropertiesPage() {
           </Button>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-card">
+        <>
+        {/* Desktop / tablet table */}
+        <div className="hidden overflow-hidden rounded-2xl border border-border/70 bg-card lg:block">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -104,6 +106,62 @@ export default async function AdminPropertiesPage() {
             </table>
           </div>
         </div>
+
+        {/* Mobile cards */}
+        <div className="space-y-3 lg:hidden">
+          {properties.map((p) => (
+            <div key={p.id} className="rounded-2xl border border-border/70 bg-card p-4">
+              <div className="flex gap-3">
+                <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-md bg-secondary">
+                  {p.images?.[0] && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={p.images[0]} alt="" className="h-full w-full object-cover" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="flex items-center gap-1.5 font-medium text-foreground">
+                    <span className="line-clamp-2">{p.title}</span>
+                    {p.featured && <Star className="h-3.5 w-3.5 shrink-0 fill-accent text-accent" />}
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{p.locality}, {p.city}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                    <span className="rounded-md bg-secondary px-2 py-0.5 font-medium text-muted-foreground">
+                      {propertyTypeShort[p.propertyType]}
+                    </span>
+                    <span className="font-semibold text-foreground">₹{p.priceLabel}</span>
+                    <span className={`rounded-full px-2.5 py-0.5 font-semibold ${statusColor[p.status]}`}>
+                      {statusLabel[p.status]}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-end gap-1 border-t border-border/60 pt-3">
+                <Link
+                  href={`/properties/${p.slug}`}
+                  target="_blank"
+                  className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                  aria-label="View"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </Link>
+                <Link
+                  href={`/admin/properties/${p.id}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
+                  aria-label="Edit"
+                >
+                  <Pencil className="h-4 w-4" />
+                </Link>
+                <DeleteButton
+                  action={deletePropertyAction}
+                  id={p.id}
+                  message={`Delete "${p.title}"?`}
+                  className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive disabled:opacity-50"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        </>
       )}
     </div>
   );

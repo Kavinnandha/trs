@@ -39,6 +39,8 @@ export default function AboutPage() {
             src="https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&fit=crop&w=2000&q=80"
             alt="Coimbatore"
             fill
+            priority
+            sizes="100vw"
             className="object-cover opacity-20 mix-blend-overlay"
           />
         </div>
@@ -154,7 +156,7 @@ export default function AboutPage() {
               <RevealItem key={m.name}>
                 <div className="group">
                   <div className="relative mb-5 h-96 overflow-hidden rounded-2xl">
-                    <Image src={m.image} alt={m.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <Image src={m.image} alt={m.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[oklch(0.24_0.035_32)]/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                   </div>
                   <div className="text-center">

@@ -30,7 +30,7 @@ export function Hero() {
   }
 
   return (
-    <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-svh w-full items-center justify-center overflow-hidden py-28 md:py-32">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 animate-kenburns">
           <Image
@@ -38,6 +38,7 @@ export function Hero() {
             alt="Premium land and homes in Coimbatore"
             fill
             priority
+            sizes="100vw"
             className="object-cover"
           />
         </div>

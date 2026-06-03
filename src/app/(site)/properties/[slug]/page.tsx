@@ -116,13 +116,13 @@ export default async function PropertyDetailPage({ params }: { params: Params })
         {/* Gallery */}
         <div className="mb-12 grid h-[360px] grid-cols-1 gap-3 overflow-hidden rounded-2xl md:h-[480px] md:grid-cols-3">
           <div className={`relative h-full ${sideImages.length ? "md:col-span-2" : "md:col-span-3"}`}>
-            <Image src={mainImage} alt={property.title} fill priority className="object-cover" />
+            <Image src={mainImage} alt={property.title} fill priority sizes="(max-width: 768px) 100vw, 66vw" className="object-cover" />
           </div>
           {sideImages.length > 0 && (
             <div className="hidden h-full flex-col gap-3 md:flex">
               {sideImages.map((img, i) => (
                 <div key={i} className="relative flex-1">
-                  <Image src={img} alt={`${property.title} ${i + 2}`} fill className="object-cover" />
+                  <Image src={img} alt={`${property.title} ${i + 2}`} fill sizes="33vw" className="object-cover" />
                 </div>
               ))}
             </div>

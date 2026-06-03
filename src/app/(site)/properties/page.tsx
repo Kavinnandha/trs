@@ -1,6 +1,7 @@
 import { Map } from "lucide-react";
 import { PropertyCard } from "@/components/PropertyCard";
 import { PropertyFilters } from "@/components/properties/PropertyFilters";
+import { MobileFilters } from "@/components/properties/MobileFilters";
 import { SortSelect } from "@/components/properties/SortSelect";
 import { Reveal, RevealGroup, RevealItem } from "@/components/anim/Reveal";
 import { getProperties, getDistinctLocalities } from "@/db/queries";
@@ -59,8 +60,8 @@ export default async function PropertiesPage({ searchParams }: { searchParams: S
       </div>
 
       <div className="container mx-auto flex flex-col gap-8 px-4 md:px-6 lg:flex-row">
-        {/* Sidebar */}
-        <aside className="w-full lg:w-1/4">
+        {/* Sidebar — desktop only; mobile uses the drawer below */}
+        <aside className="hidden lg:block lg:w-1/4">
           <div className="lg:sticky lg:top-28">
             <PropertyFilters localities={localities} />
           </div>
@@ -68,18 +69,19 @@ export default async function PropertiesPage({ searchParams }: { searchParams: S
 
         {/* Results */}
         <div className="w-full lg:w-3/4">
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <MobileFilters localities={localities} />
             <p className="font-medium text-muted-foreground">
               {properties.length} {properties.length === 1 ? "property" : "properties"} found
             </p>
-            <div className="flex items-center gap-3 text-sm">
+            <div className="ml-auto flex items-center gap-2 text-sm sm:gap-3">
               <span className="hidden text-muted-foreground sm:inline">Sort by:</span>
               <SortSelect />
             </div>
           </div>
 
           {properties.length > 0 ? (
-            <RevealGroup className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+            <RevealGroup className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8">
               {properties.map((p) => (
                 <RevealItem key={p.id}>
                   <PropertyCard property={p} />

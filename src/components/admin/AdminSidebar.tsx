@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -31,6 +31,18 @@ export function AdminSidebar({ newEnquiries = 0 }: { newEnquiries?: number }) {
 
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname === href || pathname.startsWith(href + "/");
+
+  // Lock background scroll while the mobile drawer is open; close on navigation.
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   const nav = (
     <nav className="flex flex-1 flex-col gap-1">
@@ -64,11 +76,16 @@ export function AdminSidebar({ newEnquiries = 0 }: { newEnquiries?: number }) {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="flex items-center justify-between border-b border-sidebar-border bg-sidebar p-4 text-sidebar-foreground md:hidden">
+      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-sidebar-border bg-sidebar p-4 pt-[max(1rem,env(safe-area-inset-top))] text-sidebar-foreground md:hidden">
         <span className="flex items-center gap-2 font-serif text-lg font-bold">
           <LotusMark className="h-5 w-5 text-sidebar-primary" /> {site.name}
         </span>
-        <button onClick={() => setOpen(true)} aria-label="Open menu">
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Open menu"
+          aria-expanded={open}
+          className="-mr-2 flex h-11 w-11 items-center justify-center rounded-lg"
+        >
           <Menu className="h-6 w-6" />
         </button>
       </div>
@@ -82,8 +99,12 @@ export function AdminSidebar({ newEnquiries = 0 }: { newEnquiries?: number }) {
       {open && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} />
-          <aside className="absolute left-0 top-0 flex h-full w-72 flex-col gap-2 bg-sidebar p-4 text-sidebar-foreground">
-            <button className="absolute right-4 top-4" onClick={() => setOpen(false)} aria-label="Close">
+          <aside className="absolute left-0 top-0 flex h-full w-[min(18rem,85vw)] flex-col gap-2 overflow-y-auto bg-sidebar p-4 pt-[max(1rem,env(safe-area-inset-top))] text-sidebar-foreground">
+            <button
+              className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-lg hover:bg-sidebar-accent"
+              onClick={() => setOpen(false)}
+              aria-label="Close"
+            >
               <X className="h-6 w-6" />
             </button>
             <SidebarInner nav={nav} />

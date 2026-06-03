@@ -22,6 +22,19 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock background scroll while the mobile menu is open.
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Close the mobile menu on route change.
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   const isHome = pathname === "/";
   const isTransparent = isHome && !isScrolled;
 
@@ -102,7 +115,11 @@ export function Navbar() {
           {/* Mobile toggle */}
           <button
             aria-label="Open menu"
-            className={cn("md:hidden", isTransparent ? "text-white" : "text-foreground")}
+            aria-expanded={mobileMenuOpen}
+            className={cn(
+              "-mr-2 flex h-11 w-11 items-center justify-center rounded-lg md:hidden",
+              isTransparent ? "text-white" : "text-foreground",
+            )}
             onClick={() => setMobileMenuOpen(true)}
           >
             <Menu className="h-6 w-6" />
@@ -118,12 +135,16 @@ export function Navbar() {
             exit={{ opacity: 0, y: -16 }}
             className="absolute left-0 top-0 z-50 w-full border-b bg-background shadow-lg md:hidden"
           >
-            <div className="flex items-center justify-between border-b p-4">
+            <div className="flex items-center justify-between border-b p-4 pt-[max(1rem,env(safe-area-inset-top))]">
               <span className="flex items-center gap-2 font-serif text-xl font-bold text-foreground">
                 <LotusMark className="h-5 w-5 text-primary" />
                 {site.name}
               </span>
-              <button aria-label="Close menu" onClick={() => setMobileMenuOpen(false)}>
+              <button
+                aria-label="Close menu"
+                onClick={() => setMobileMenuOpen(false)}
+                className="-mr-2 flex h-11 w-11 items-center justify-center rounded-lg"
+              >
                 <X className="h-6 w-6 text-foreground" />
               </button>
             </div>
@@ -143,7 +164,7 @@ export function Navbar() {
                   {link.name}
                 </Link>
               ))}
-              <Button asChild className="mt-3 w-full rounded-full">
+              <Button asChild className="mt-3 h-11 w-full rounded-full text-base">
                 <a href={whatsappLink(`Hi ${site.name}, I'd like a property consultation.`)} target="_blank" rel="noopener noreferrer">
                   <Phone className="mr-1.5 h-4 w-4" /> Get Advisory
                 </a>

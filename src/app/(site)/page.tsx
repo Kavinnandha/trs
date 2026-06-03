@@ -70,7 +70,7 @@ export default async function HomePage() {
       <Hero />
 
       {/* Categories */}
-      <section className="bg-background py-20">
+      <section className="bg-background py-14 md:py-20">
         <div className="container mx-auto px-4 md:px-6">
           <Reveal className="mx-auto mb-12 max-w-2xl text-center">
             <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
@@ -102,9 +102,9 @@ export default async function HomePage() {
       </section>
 
       {/* Featured properties */}
-      <section className="bg-secondary/40 py-24">
+      <section className="bg-secondary/40 py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
-          <Reveal className="mb-12 flex flex-col items-end justify-between gap-6 md:flex-row">
+          <Reveal className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
               <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
                 Handpicked for you
@@ -139,7 +139,7 @@ export default async function HomePage() {
       </section>
 
       {/* Why us */}
-      <section className="relative overflow-hidden bg-background py-24">
+      <section className="relative overflow-hidden bg-background py-16 md:py-24">
         <MandalaGlow className="absolute -right-20 top-10 h-80 w-80 text-accent/10" />
         <MandalaGlow className="absolute -left-24 bottom-0 h-72 w-72 text-primary/10" />
         <div className="container relative z-10 mx-auto px-4 md:px-6">
@@ -191,7 +191,7 @@ export default async function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="relative overflow-hidden bg-[oklch(0.24_0.035_32)] py-24 text-white">
+      <section className="relative overflow-hidden bg-[oklch(0.24_0.035_32)] py-16 md:py-24 text-white">
         <div className="bg-kolam pointer-events-none absolute inset-0 text-white/[0.04]" />
         <div className="container relative z-10 mx-auto px-4 md:px-6">
           <Reveal className="mb-16 text-center">
@@ -230,9 +230,9 @@ export default async function HomePage() {
 
       {/* Latest updates */}
       {updates.length > 0 && (
-        <section className="bg-background py-24">
+        <section className="bg-background py-16 md:py-24">
           <div className="container mx-auto px-4 md:px-6">
-            <Reveal className="mb-12 flex flex-col items-end justify-between gap-6 md:flex-row">
+            <Reveal className="mb-12 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
               <div>
                 <p className="mb-2 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
                   News & market
@@ -259,6 +259,7 @@ export default async function HomePage() {
                           src={u.coverImage || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80"}
                           alt={u.title}
                           fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                         />
                         <span className="absolute left-3 top-3 rounded-full bg-accent px-3 py-1 text-xs font-semibold capitalize text-accent-foreground">
@@ -282,7 +283,7 @@ export default async function HomePage() {
       )}
 
       {/* CTA */}
-      <section className="relative overflow-hidden bg-primary py-24 text-primary-foreground">
+      <section className="relative overflow-hidden bg-primary py-16 md:py-24 text-primary-foreground">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1605146769289-440113cc3d00?auto=format&fit=crop&w=2000&q=80')] bg-cover bg-center opacity-10 mix-blend-overlay" />
         <MandalaGlow className="absolute -right-16 -top-16 h-72 w-72 text-white/10" />
         <div className="container relative z-10 mx-auto px-4 text-center">

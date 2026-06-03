@@ -49,7 +49,7 @@ export default async function UpdateDetailPage({ params }: { params: Params }) {
 
         {update.coverImage && (
           <div className="relative mb-10 h-64 overflow-hidden rounded-2xl md:h-96">
-            <Image src={update.coverImage} alt={update.title} fill priority className="object-cover" />
+            <Image src={update.coverImage} alt={update.title} fill priority sizes="(max-width: 768px) 100vw, 768px" className="object-cover" />
           </div>
         )}
 

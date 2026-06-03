@@ -57,6 +57,8 @@ export default async function UpdatesPage() {
                         src={lead.coverImage || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80"}
                         alt={lead.title}
                         fill
+                        priority
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     </div>
@@ -92,6 +94,7 @@ export default async function UpdatesPage() {
                             src={u.coverImage || "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80"}
                             alt={u.title}
                             fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-110"
                           />
                           <span className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-semibold capitalize ${categoryColor[u.category]}`}>

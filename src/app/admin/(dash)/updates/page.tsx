@@ -33,7 +33,9 @@ export default async function AdminUpdatesPage() {
           </Button>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-card">
+        <>
+        {/* Desktop / tablet table */}
+        <div className="hidden overflow-hidden rounded-2xl border border-border/70 bg-card lg:block">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -98,6 +100,62 @@ export default async function AdminUpdatesPage() {
             </table>
           </div>
         </div>
+
+        {/* Mobile cards */}
+        <div className="space-y-3 lg:hidden">
+          {updates.map((u) => (
+            <div key={u.id} className="rounded-2xl border border-border/70 bg-card p-4">
+              <div className="flex gap-3">
+                <div className="relative h-16 w-20 shrink-0 overflow-hidden rounded-md bg-secondary">
+                  {u.coverImage && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={u.coverImage} alt="" className="h-full w-full object-cover" />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="line-clamp-2 font-medium text-foreground">{u.title}</p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
+                    <span className="capitalize text-muted-foreground">{u.category}</span>
+                    <span
+                      className={`rounded-full px-2.5 py-0.5 font-semibold ${
+                        u.published ? "bg-emerald-100 text-emerald-800" : "bg-slate-200 text-slate-700"
+                      }`}
+                    >
+                      {u.published ? "Published" : "Draft"}
+                    </span>
+                    <span className="text-muted-foreground">{formatDate(u.publishedAt ?? u.createdAt)}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-end gap-1 border-t border-border/60 pt-3">
+                {u.published && (
+                  <Link
+                    href={`/updates/${u.slug}`}
+                    target="_blank"
+                    className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                    aria-label="View"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                  </Link>
+                )}
+                <Link
+                  href={`/admin/updates/${u.id}`}
+                  className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
+                  aria-label="Edit"
+                >
+                  <Pencil className="h-4 w-4" />
+                </Link>
+                <DeleteButton
+                  action={deleteUpdateAction}
+                  id={u.id}
+                  message={`Delete "${u.title}"?`}
+                  className="flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive disabled:opacity-50"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+        </>
       )}
     </div>
   );
